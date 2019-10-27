@@ -11,7 +11,13 @@ In the current status it is difficult to help.
 Since I haven't written a C program in a long time, it would be most helpful if you look over the structure and give me some tips.
 
 # Build
-Coming soon
+You need cmake to compile the sources.
+```bash
+mkdir build
+cd build
+cmake ..
+cmake --build .
+```
 
 # Licence
 [GNU GENERAL PUBLIC LICENSE](LICENSE.md)
