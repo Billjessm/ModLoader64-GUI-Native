@@ -19,17 +19,17 @@ void config_save(){
 	cJSON *root = cJSON_CreateObject();
 
     cJSON *graphic = cJSON_AddObjectToObject(root, "graphic");
-    cJSON_AddNumberToObject(graphic, "screen_width", screen_width);
-    cJSON_AddNumberToObject(graphic, "screen_height", screen_height);
-    cJSON_AddNumberToObject(graphic, "fps", fps);
-    cJSON_AddBoolToObject(graphic, "fullscreen", fullscreen);
+    cJSON_AddNumberToObject(graphic, "screen_width", config_screen_width);
+    cJSON_AddNumberToObject(graphic, "screen_height", config_screen_height);
+    cJSON_AddNumberToObject(graphic, "fps", config_fps);
+    cJSON_AddBoolToObject(graphic, "fullscreen", config_fullscreen);
 
 	cJSON *mapping = cJSON_AddObjectToObject(root, "mapping");
 	for (size_t i = 0; i < 16; i++) {
-		cJSON *input = cJSON_AddObjectToObject(mapping, input_mapping[i].id_name);
-		cJSON_AddBoolToObject(input, "is_axis", input_mapping[i].is_axis);
-		cJSON_AddBoolToObject(input, "flipped", input_mapping[i].flipped);
-		cJSON_AddNumberToObject(input, "index", input_mapping[i].index);
+		cJSON *input = cJSON_AddObjectToObject(mapping, config_input_mapping[i].id_name);
+		cJSON_AddBoolToObject(input, "is_axis", config_input_mapping[i].is_axis);
+		cJSON_AddBoolToObject(input, "flipped", config_input_mapping[i].flipped);
+		cJSON_AddNumberToObject(input, "index", config_input_mapping[i].index);
 	}
 	json_config_str = cJSON_Print(root);
 	FILE* fp;
@@ -47,7 +47,7 @@ void config_init_base(){
 
     config_screen_width = GetMonitorWidth(0);    
     config_screen_height = GetMonitorHeight(0);
-    config_screen_width_mid = (int)(screen_width/2);
+    config_screen_width_mid = (int)(config_screen_width/2);
     config_fullscreen = false;
     config_fps = 30;
 

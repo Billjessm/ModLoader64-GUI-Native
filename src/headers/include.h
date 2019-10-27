@@ -25,6 +25,12 @@
 
     // views
 
+    extern void view_placeholder_init();
+    extern void view_placeholder_activate();
+    extern void view_placeholder_draw();
+    extern void view_placeholder_deactive();
+    extern void view_placeholder_destroy();
+
     extern void view_games_init();
     extern void view_games_activate();
     extern void view_games_draw();
