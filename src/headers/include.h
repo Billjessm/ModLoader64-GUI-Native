@@ -12,7 +12,7 @@
 	//
 	extern int view;
 
-	extern int selected_game;
+	
 
     // config
     extern ControllerInput config_input_mapping[];
@@ -38,6 +38,7 @@
     extern void view_placeholder_deactive();
     extern void view_placeholder_destroy();
 
+	extern int selected_game;
     extern void view_games_init();
     extern void view_games_activate();
     extern void view_games_draw();

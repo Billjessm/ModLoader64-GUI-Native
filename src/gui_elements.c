@@ -1,12 +1,18 @@
 #include "headers/include.h"
 
-Texture2D pannel;
+static Texture2D pannel;
+static Font LAUNCHER_FONT;    // Global variable, initialize at beginning.
 
 void ui_init(){
     pannel = LoadTexture("resources/images/panel.png");
+	LAUNCHER_FONT = LoadFont("resources/misc/Anonymous_Pro_B.ttf");
 }
 
 
+void DrawTextB(char *text, int posX, int posY, int fontSize, Color color)
+{
+	DrawTextEx(LAUNCHER_FONT, text, (Vector2) { (float)posX, (float)posY }, fontSize + 2, 1, color);
+}
 
 void ui_draw_list(UIList *ui_list){
     if(ui_list->active){
