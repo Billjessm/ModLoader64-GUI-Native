@@ -32,15 +32,18 @@ void config_save(){
 		cJSON_AddNumberToObject(input, "index", config_input_mapping[i].index);
 	}
 	json_config_str = cJSON_Print(root);
-	FILE* fp;
-	int err = fopen_s(&fp, "config.json", "w");
-	if (err < 0) {
-		//throw_error(ERROR_CONFIG_EXAMPLE_NOT_FOUND);
-		//view_state = VIEW_EXIT;
-		return;
-	}
-	fprintf(fp, json_config_str);
-	fclose(fp);
+
+	// TODO: LINUX FIX:
+
+	// FILE* fp;
+	// int err = fopen("config.json", "w");
+	// if (err < 0) {
+	// 	//throw_error(ERROR_CONFIG_EXAMPLE_NOT_FOUND);
+	// 	//view_state = VIEW_EXIT;
+	// 	return;
+	// }
+	// fprintf(fp, json_config_str);
+	// fclose(fp);
 }
 
 void config_init_base(){

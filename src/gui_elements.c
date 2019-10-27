@@ -32,7 +32,7 @@ void ui_draw_list(UIList *ui_list){
     // calc size ...
     // ui_list->size
     //DrawTextureEx(pannel, , 0, 1.0f, WHITE);
-	for (size_t i = 0; i < ui_list->item_count; i++)
+	for (int i = 0; i < ui_list->item_count; i++)
 	{
 		if (ui_list->cursor == i) {
 			DrawText(ui_list->items[i].name, 100, 100 + i * 40, 30, GREEN);
