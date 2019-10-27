@@ -1,4 +1,4 @@
-#include "include.h"
+//#include "include.h"
 
 typedef struct ControllerInput{
     int index;
@@ -22,7 +22,7 @@ typedef struct ControllerInputGui{
 
     Texture2D texture;
     Vector2 text_pos;
-};
+} ControllerInputGui;
 
 typedef struct UIConfig{
     int screen_width;

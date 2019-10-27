@@ -26,17 +26,17 @@ void config_save(){
 
 	cJSON *mapping = cJSON_AddObjectToObject(root, "mapping");
 	for (size_t i = 0; i < 16; i++) {
-		cJSON *input = cJSON_AddObjectToObject(mapping, config_input_mapping[i].id_name);
+		cJSON *input = cJSON_AddObjectToObject(mapping, config_input_mapping[i].id);
 		cJSON_AddBoolToObject(input, "is_axis", config_input_mapping[i].is_axis);
-		cJSON_AddBoolToObject(input, "flipped", config_input_mapping[i].flipped);
+		cJSON_AddBoolToObject(input, "flipped", config_input_mapping[i].is_flipped);
 		cJSON_AddNumberToObject(input, "index", config_input_mapping[i].index);
 	}
 	json_config_str = cJSON_Print(root);
 	FILE* fp;
 	int err = fopen_s(&fp, "config.json", "w");
 	if (err < 0) {
-		throw_error(ERROR_CONFIG_EXAMPLE_NOT_FOUND);
-		view_state = VIEW_EXIT;
+		//throw_error(ERROR_CONFIG_EXAMPLE_NOT_FOUND);
+		//view_state = VIEW_EXIT;
 		return;
 	}
 	fprintf(fp, json_config_str);
@@ -44,9 +44,9 @@ void config_save(){
 }
 
 void config_init_base(){
-
-    config_screen_width = GetMonitorWidth(0);    
-    config_screen_height = GetMonitorHeight(0);
+	int test = GetMonitorCount();
+    config_screen_width = GetMonitorWidth(GetMonitorCount()-1);
+    config_screen_height = GetMonitorHeight(GetMonitorCount() - 1);
     config_screen_width_mid = (int)(config_screen_width/2);
     config_fullscreen = false;
     config_fps = 30;
@@ -75,12 +75,10 @@ void config_init(){
 
     char *json_config_str;
 	
-	init_mapping();
-
 	if (!FileExists("config.json")) {		
 		config_save();
 	} else {
-		json_config_str = LoadText("config.json");
-        load_json(json_config_str);
+		//json_config_str = LoadText("config.json");
+        //load_json(json_config_str);
 	}	
 }

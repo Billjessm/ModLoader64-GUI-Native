@@ -2,15 +2,15 @@
 
 #define VIEW_COUNT 7
 
-int last_view = -1;
-int view = -1;
+int last_view = 0;
+int view = 0;
 UIView views[VIEW_COUNT];
 
 void main() {
     // init config
     SetExitKey(-255); // Disable close app with ESC 
 
-    load_config();
+	config_init();
 
     InitWindow(config_screen_width, config_screen_height, "ModLoader 64");
     SetTargetFPS(config_fps);
@@ -32,6 +32,8 @@ void main() {
     while (!WindowShouldClose())
     {
         BeginDrawing();
+
+		ClearBackground(RAYWHITE);
 
         if(view != last_view){
             views[last_view].deactive();

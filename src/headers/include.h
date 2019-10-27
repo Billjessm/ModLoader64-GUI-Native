@@ -1,11 +1,14 @@
 #ifndef INCLUDES_H
     #define INCLUDES_H
 
+	
+
     #include "raylib.h"
 
     #include "structs.h"
     #include "views.h"
     #include "functions.h"
+
 
     // config
     extern ControllerInput config_input_mapping[];
