@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.11) # FetchContent is available in 3.11+
-project(example)
+project(ML64-guie)
 
 # Set this to the minimal version you want to support
 find_package(raylib 2.5 QUIET) # Let CMake search for a raylib-config.cmake

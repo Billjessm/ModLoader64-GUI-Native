@@ -12,6 +12,12 @@ Since I haven't written a C program in a long time, it would be most helpful if 
 
 # Build
 You need cmake to compile the sources.
+
+## Clone
+```
+git clone --recurse-submodules git@github.com:hylian-modding/ModLoader64-GUI-Native.git
+```
+## Build
 ```bash
 mkdir build
 cd build
