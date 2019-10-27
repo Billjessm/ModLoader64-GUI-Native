@@ -45,7 +45,7 @@ typedef struct UIList{
     UIListItem *items;
     int item_count;
     int cursor;
-    void (*func_item)(int);
+    void (*func_item)();
     Vector2 size;
     Vector2 pos;
 } UIList;

@@ -2,8 +2,8 @@
 
 #define VIEW_COUNT 7
 
-int last_view = 0;
-int view = 0;
+int last_view = 2;
+int view = 2;
 UIView views[VIEW_COUNT];
 
 void main() {
@@ -34,6 +34,8 @@ void main() {
         BeginDrawing();
 
 		ClearBackground(RAYWHITE);
+
+		DrawText(FormatText("%f", GetTime()), 30, 250, 24, GREEN);
 
         if(view != last_view){
             views[last_view].deactive();

@@ -1,14 +1,30 @@
 #include "../headers/include.h"
 
-UIList games;
+typedef enum State { SELECT_GAME, SELECT_ROM } State;
+
+static UIList games;
+static UIListItem items[3];
+static State state;
+
+void game_selected() {
+	
+}
+
 
 void view_games_init(){
-    games.active = false;
+    games.active = true;
+	games.item_count = 3;
+	games.func_item = &game_selected;
+	games.items = items;
+	games.items[0].name = "Ocarina of Time";
+	games.items[1].name = "Mario";
+	games.items[2].name = "Was anderes";
 
 }
 
 void view_games_activate(){
     games.active = true;
+	state = SELECT_GAME;
 }
 
 void view_games_draw(){

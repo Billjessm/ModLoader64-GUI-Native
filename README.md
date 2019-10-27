@@ -1,6 +1,6 @@
 # ModLoader 64 GUI - Native
 
-This is the reposetory for the native launcher. The purpose of this launcher is to support multimedia PC's and the Raspberry PI. So that you can play on TV with Gamepad only.
+This is the repository for the native launcher. The purpose of this launcher is to support multimedia PC's and the Raspberry PI. So that you can play on TV with Gamepad only.
 
 # Status
 Currently the launcher is in a complete rewrite and not yet usable.
