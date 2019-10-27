@@ -8,7 +8,11 @@
     #include "structs.h"
     #include "views.h"
     #include "functions.h"
+	
+	//
+	extern int view;
 
+	extern int selected_game;
 
     // config
     extern ControllerInput config_input_mapping[];
@@ -39,6 +43,12 @@
     extern void view_games_draw();
     extern void view_games_deactive();
     extern void view_games_destroy();
+
+    extern void view_create_game_init();
+    extern void view_create_game_activate();
+    extern void view_create_game_draw();
+    extern void view_create_game_deactive();
+    extern void view_create_game_destroy();
 
 
 #endif

@@ -6,8 +6,11 @@ static UIList games;
 static UIListItem items[3];
 static State state;
 
+int selected_game;
+
 void game_selected() {
-	
+	view = 4;
+	selected_game = games.cursor;
 }
 
 

@@ -19,7 +19,7 @@ void main() {
     NewUiView(views[1], 0, "Loading", &view_placeholder_init, &view_placeholder_activate, &view_placeholder_draw, &view_placeholder_deactive, &view_placeholder_destroy);
     NewUiView(views[2], 0, "Select Game", &view_games_init, &view_games_activate, &view_games_draw, &view_games_deactive, &view_games_destroy);
     NewUiView(views[3], 0, "Gamepad Mapping", &view_placeholder_init, &view_placeholder_activate, &view_placeholder_draw, &view_placeholder_deactive, &view_placeholder_destroy);
-    NewUiView(views[4], 0, "Create Game", &view_placeholder_init, &view_placeholder_activate, &view_placeholder_draw, &view_placeholder_deactive, &view_placeholder_destroy);
+    NewUiView(views[4], 0, "Create Game", &view_create_game_init, &view_create_game_activate, &view_create_game_draw, &view_create_game_deactive, &view_create_game_destroy);
     NewUiView(views[5], 0, "Plugin Settings", &view_placeholder_init, &view_placeholder_activate, &view_placeholder_draw, &view_placeholder_deactive, &view_placeholder_destroy);
     NewUiView(views[6], 0, "Start Game", &view_placeholder_init, &view_placeholder_activate, &view_placeholder_draw, &view_placeholder_deactive, &view_placeholder_destroy);
 
