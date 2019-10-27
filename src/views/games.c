@@ -22,7 +22,6 @@ void view_games_init(){
 	games.items[0].name = "Ocarina of Time";
 	games.items[1].name = "Mario";
 	games.items[2].name = "Was anderes";
-
 }
 
 void view_games_activate(){
