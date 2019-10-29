@@ -24,7 +24,7 @@
 .PHONY: all clean
 
 # Define required raylib variables
-PROJECT_NAME       ?= wave_collector
+PROJECT_NAME       ?= ML64_GN
 RAYLIB_VERSION     ?= 2.5.0
 RAYLIB_API_VERSION ?= 2
 RAYLIB_PATH        ?= extern_libs/raylib
@@ -155,6 +155,9 @@ ifeq ($(PLATFORM),PLATFORM_DESKTOP)
         # FreeBSD, OpenBSD, NetBSD, DragonFly default compiler
         CC = clang
     endif
+    ifeq ($(PLATFORM_OS), WINDOWS)
+        CC = i686-w64-mingw32-gcc
+    endif
 endif
 ifeq ($(PLATFORM),PLATFORM_RPI)
     ifeq ($(USE_RPI_CROSS_COMPILER),TRUE)
@@ -200,7 +203,7 @@ ifeq ($(PLATFORM),PLATFORM_DESKTOP)
     ifeq ($(PLATFORM_OS),WINDOWS)
         # resource file contains windows executable icon and properties
         # -Wl,--subsystem,windows hides the console window
-        CFLAGS += $(RAYLIB_PATH)/raylib.rc.data -Wl,--subsystem,windows
+        # CFLAGS += $(RAYLIB_PATH)/raylib.rc.data -Wl,--subsystem,windows
     endif
     ifeq ($(PLATFORM_OS),LINUX)
         ifeq ($(RAYLIB_LIBTYPE),STATIC)
@@ -332,7 +335,7 @@ endif
 ifeq ($(PLATFORM),PLATFORM_RPI)
     # Libraries for Raspberry Pi compiling
     # NOTE: Required packages: libasound2-dev (ALSA)
-    LDLIBS = -lraylib -lbrcmGLESv2 -lbrcmEGL -lpthread -lrt -lm -lbcm_host -ldl
+    LDLIBS = -lraylib -lbrcmGLESv2 -lbrcmEGL -lpthread -lrt -lm -lbcm_host -ldl -lvcos -lvchiq_arm
 endif
 ifeq ($(PLATFORM),PLATFORM_WEB)
     # Libraries for web (HTML5) compiling
@@ -342,8 +345,8 @@ endif
 # Define all source files required
 PROJECT_SOURCE_FILES ?= \
     src/main.c \
-	extern_libs\cJSON\cJSON.c \
-	extern_libs\cJSON\cJSON_Utils.c \
+	extern_libs/cJSON/cJSON.c \
+	extern_libs/cJSON/cJSON_Utils.c \
 	src/config.c \
 	src/controlls.c \
 	src/gui_elements.c \
@@ -366,11 +369,13 @@ endif
 # Default target entry
 # NOTE: We call this Makefile target or Makefile.Android target
 all:
+	mkdir -p build/$(PLATFORM)
 	$(MAKE) $(MAKEFILE_PARAMS)
+
 
 # Project target defined by PROJECT_NAME
 $(PROJECT_NAME): $(OBJS)
-	$(CC) -o $(PROJECT_NAME)$(EXT) $(OBJS) $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM)
+	$(CC) -o build/${PLATFORM}/$(PROJECT_NAME)$(EXT) $(OBJS) $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM)
 
 # Compile source files
 # NOTE: This pattern will compile every module defined on $(OBJS)
@@ -385,6 +390,7 @@ ifeq ($(PLATFORM),PLATFORM_DESKTOP)
     endif
     ifeq ($(PLATFORM_OS),LINUX)
 	find -type f -executable | xargs file -i | grep -E 'x-object|x-archive|x-sharedlib|x-executable' | rev | cut -d ':' -f 2- | rev | xargs rm -fv
+	find -type f -iname "*.o" | xargs file -i | grep -E 'x-object|x-archive|x-sharedlib|x-executable' | rev | cut -d ':' -f 2- | rev | xargs rm -fv        
     endif
     ifeq ($(PLATFORM_OS),OSX)
 		find . -type f -perm +ugo+x -delete
