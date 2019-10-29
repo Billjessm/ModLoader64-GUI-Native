@@ -51,5 +51,12 @@
     extern void view_create_game_deactive();
     extern void view_create_game_destroy();
 
+    extern void view_mapping_init();
+    extern void view_mapping_activate();
+    extern void view_mapping_draw();
+    extern void view_mapping_deactive();
+    extern void view_mapping_destroy();
+
+
 
 #endif

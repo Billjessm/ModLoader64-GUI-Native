@@ -11,7 +11,8 @@ void ui_init(){
 
 void DrawTextB(char *text, int posX, int posY, int fontSize, Color color)
 {
-	DrawTextEx(LAUNCHER_FONT, text, (Vector2) { (float)posX, (float)posY }, fontSize + 2, 1, color);
+	//DrawTextEx(FONT_DEFAULT, text, (Vector2) { (float)posX, (float)posY }, fontSize + 2, 1, color);
+  DrawText(text, posX, posY, fontSize, color);
 }
 
 void ui_draw_list(UIList *ui_list){

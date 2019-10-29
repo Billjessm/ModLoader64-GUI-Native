@@ -37,7 +37,11 @@ void view_mapping_init() {
 //	detected_axis = -1;
 //}
 
-void view_mapping_update() {
+void view_mapping_activate(){
+
+}
+
+void view_mapping_draw() {
 	if (IsGamepadAvailable(GAMEPAD_PLAYER1))
 	{	
 		if (first_connect) {
@@ -122,6 +126,10 @@ void view_mapping_update() {
 	{
 		DrawTextB("NO GAMEPAD DETECTED!\nPlease connect a gamepad.", mid2-150, 300, 30, WHITE);
 	}
+}
+
+void view_mapping_deactive(){
+	
 }
 
 void view_mapping_destroy() {
