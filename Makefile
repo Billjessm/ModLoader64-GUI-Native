@@ -24,15 +24,13 @@
 .PHONY: all clean
 
 # Define required raylib variables
-PROJECT_NAME       ?= game
+PROJECT_NAME       ?= wave_collector
 RAYLIB_VERSION     ?= 2.5.0
-RAYLIB_API_VERSION ?= 251
-RAYLIB_PATH        ?= ..\..
-
-# Define compiler path on Windows
-COMPILER_PATH      ?= C:/raylib/mingw/bin
+RAYLIB_API_VERSION ?= 2
+RAYLIB_PATH        ?= extern_libs/raylib
 
 # Define default options
+
 # One of PLATFORM_DESKTOP, PLATFORM_RPI, PLATFORM_ANDROID, PLATFORM_WEB
 PLATFORM           ?= PLATFORM_DESKTOP
 
@@ -70,7 +68,6 @@ ifeq ($(PLATFORM),PLATFORM_DESKTOP)
     # ifeq ($(UNAME),Msys) -> Windows
     ifeq ($(OS),Windows_NT)
         PLATFORM_OS=WINDOWS
-        export PATH := $(COMPILER_PATH):$(PATH)
     else
         UNAMEOS=$(shell uname)
         ifeq ($(UNAMEOS),Linux)
@@ -119,7 +116,7 @@ endif
 ifeq ($(PLATFORM),PLATFORM_WEB)
     # Emscripten required variables
     EMSDK_PATH          ?= C:/emsdk
-    EMSCRIPTEN_VERSION  ?= 1.38.31
+    EMSCRIPTEN_VERSION  ?= 1.38.32
     CLANG_VERSION       = e$(EMSCRIPTEN_VERSION)_64bit
     PYTHON_VERSION      = 2.7.13.1_64bit\python-2.7.13.amd64
     NODE_VERSION        = 8.9.1_64bit
@@ -174,7 +171,7 @@ ifeq ($(PLATFORM),PLATFORM_WEB)
 endif
 
 # Define default make program: Mingw32-make
-MAKE = mingw32-make
+# MAKE = mingw32-make
 
 ifeq ($(PLATFORM),PLATFORM_DESKTOP)
     ifeq ($(PLATFORM_OS),LINUX)
@@ -203,7 +200,7 @@ ifeq ($(PLATFORM),PLATFORM_DESKTOP)
     ifeq ($(PLATFORM_OS),WINDOWS)
         # resource file contains windows executable icon and properties
         # -Wl,--subsystem,windows hides the console window
-        CFLAGS += $(RAYLIB_PATH)/src/raylib.rc.data -Wl,--subsystem,windows
+        CFLAGS += $(RAYLIB_PATH)/raylib.rc.data -Wl,--subsystem,windows
     endif
     ifeq ($(PLATFORM_OS),LINUX)
         ifeq ($(RAYLIB_LIBTYPE),STATIC)
@@ -233,7 +230,7 @@ ifeq ($(PLATFORM),PLATFORM_WEB)
     # --profiling                # include information for code profiling
     # --memory-init-file 0       # to avoid an external memory initialization code file (.mem)
     # --preload-file resources   # specify a resources folder for data compilation
-    CFLAGS += -Os -s USE_GLFW=3 -s TOTAL_MEMORY=16777216 --preload-file resources
+    CFLAGS += -Os -s USE_GLFW=3 -s TOTAL_MEMORY=67108864 --preload-file resources
     ifeq ($(BUILD_MODE), DEBUG)
         CFLAGS += -s ASSERTIONS=1 --profiling
     endif
@@ -342,23 +339,26 @@ ifeq ($(PLATFORM),PLATFORM_WEB)
     LDLIBS = $(RAYLIB_RELEASE_PATH)/libraylib.bc
 endif
 
-# Define a recursive wildcard function
-rwildcard=$(foreach d,$(wildcard $1*),$(call rwildcard,$d/,$2) $(filter $(subst *,%,$2),$d))
-
 # Define all source files required
-SRC_DIR = src
-OBJ_DIR = obj
+PROJECT_SOURCE_FILES ?= \
+    src/main.c \
+	extern_libs\cJSON\cJSON.c \
+	extern_libs\cJSON\cJSON_Utils.c \
+	src/config.c \
+	src/controlls.c \
+	src/gui_elements.c \
+	src/views/create_game.c \
+	src/views/games.c \
+	src/views/placeholder.c \
 
 # Define all object files from source files
-SRC = $(call rwildcard, *.c, *.h)
-#OBJS = $(SRC:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
-OBJS = main.c
+OBJS = $(patsubst %.c, %.o, $(PROJECT_SOURCE_FILES))
 
 # For Android platform we call a custom Makefile.Android
 ifeq ($(PLATFORM),PLATFORM_ANDROID)
     MAKEFILE_PARAMS = -f Makefile.Android 
     export PROJECT_NAME
-    export SRC_DIR
+    export PROJECT_SOURCE_FILES
 else
     MAKEFILE_PARAMS = $(PROJECT_NAME)
 endif
@@ -374,8 +374,7 @@ $(PROJECT_NAME): $(OBJS)
 
 # Compile source files
 # NOTE: This pattern will compile every module defined on $(OBJS)
-#%.o: %.c
-$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
+%.o: %.c
 	$(CC) -c $< -o $@ $(CFLAGS) $(INCLUDE_PATHS) -D$(PLATFORM)
 
 # Clean everything
